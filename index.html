@@ -326,6 +326,12 @@ html[data-theme="graphite"] .thbtn .moon{display:none}
 .toast{opacity:0;visibility:hidden}
 .toast.show{opacity:1;visibility:visible}
 .hero-card .hero-photo{width:112px;height:112px;object-fit:cover;object-position:50% 22%;border:3px solid var(--surface);outline:2px solid var(--accent);margin-bottom:16px}
+
+.tdg .mdg{margin:2px 0 4px}
+.tdg .dgcap{margin:8px 0 16px}
+.dgsep{height:1px;background:var(--line);margin:10px 0}
+.tdg .mdg svg.dg{max-width:640px;margin:0 auto}
+@media(min-width:861px){.pgrid{grid-template-columns:repeat(2,1fr)}}
 </style>
 </head>
 <body>
@@ -353,7 +359,7 @@ html[data-theme="graphite"] .thbtn .moon{display:none}
       <div class="subtitle">Backend engineer · M.Sc. Data Science, TU Dortmund</div>
       <p class="lead">I spent three years as a backend engineer at Tata Digital, mostly in Kotlin, building the service that sat between customer data for 140M+ members and the Tata Neu travel systems. I'm now doing my Master's in Data Science at TU Dortmund and looking for a working student role in software engineering or data science.</p>
       <div class="cta">
-        <a class="btn primary" href="#projects">See the projects
+        <a class="btn primary" href="#experience">See my work
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
         <a class="btn" id="cvBtn" href="Gaurav_Kumar_CV.pdf" download>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12m0 0l-5-5m5 5l5-5M4 21h16"/></svg>Download CV</a>
@@ -412,7 +418,7 @@ html[data-theme="graphite"] .thbtn .moon{display:none}
 <section id="experience">
   <div class="wrap">
     <h2 class="sec-title">Experience</h2>
-    <p class="sec-sub">Click a role to open it. The Tata Digital role is split into topics, and some items link to an animated case study further down.</p>
+    <p class="sec-sub">Click a role to open it. Each one has a small animation of what the work involved; the Tata Digital role is split into topics, each with its own.</p>
     <div class="group-label">Full-time</div>
     <div class="timeline" id="tlFull"></div>
     <div class="group-label">Internships</div>
@@ -422,9 +428,8 @@ html[data-theme="graphite"] .thbtn .moon{display:none}
 
 <section id="projects">
   <div class="wrap">
-    <h2 class="sec-title">Projects and case studies</h2>
-    <p class="sec-sub">Each card has a small animation of what the system does. Open a card for the details.</p>
-    <div class="filters" id="filters"></div>
+    <h2 class="sec-title">Projects</h2>
+    <p class="sec-sub">Two projects outside work: one from my Master's, one of my own. Open a card for the details.</p>
     <div class="pgrid" id="pgrid"></div>
   </div>
 </section>
@@ -2985,32 +2990,129 @@ iot(){const D=6;let s=`<rect class="box" x="14" y="30" width="38" height="74" rx
   return svg('0 0 300 130',s,'Phone toggle sends a command through the cloud to the microcontroller, which switches the light',4.5)}
 };
 
+/* ===== added: one animation per role ===== */
+Object.assign(DIAG,{
+/* product catalogue team: brand catalogues -> one catalogue; pipeline strip */
+ucp(){const D=8,brands=['BigBasket','Croma','Titan','Tanishq'],ys=[20,46,72,98];let s='';
+  brands.forEach((b,i)=>{s+=`<rect class="box" x="6" y="${ys[i]-10}" width="74" height="20" rx="5"/>${T(43,ys[i]+3.5,b,'ts',null,9.5)}<path class="wire" d="M80,${ys[i]} L110,57"/>`});
+  s+=`<rect class="boxa" x="110" y="36" width="80" height="42" rx="6"/>${T(150,54,'catalogue','ta',null,10)}${T(150,67,'Java · Spring','',null,9)}
+  <path class="wire" d="M190,57 H212"/>
+  <rect class="box" x="212" y="10" width="82" height="98" rx="6"/>${T(253,22,'one catalogue','',null,9)}`;
+  for(let i=0;i<12;i++){const r=Math.floor(i/3),c=i%3,tx=220+c*24,ty=30+r*19,k=i%4,a=.03+i*.06;
+    s+=`<g opacity="0"><circle r="3" class="fa"/>${A([[a,80,ys[k],0],[a+.01,80,ys[k],1],[a+.07,150,57,1],[a+.1,190,57,1],[a+.15,tx+9,ty+7,1],[a+.16,tx+9,ty+7,0]],D)}</g>`;
+    s+=`<rect class="f2" x="${tx}" y="${ty}" width="18" height="14" rx="2"/><rect class="fa" x="${tx}" y="${ty}" width="18" height="14" rx="2" opacity="0">${O([[a+.15,0],[a+.17,.85],[.92,.85],[.96,0]],D)}</rect>`}
+  const st=['build','test','deploy','live'];
+  st.forEach((n,i)=>{const x=6+i*52;s+=`<rect class="box" x="${x}" y="120" width="44" height="20" rx="5"/>${T(x+22,133.5,n,'',null,9)}
+    <rect x="${x}" y="120" width="44" height="20" rx="5" fill="var(--accent-soft)" stroke="var(--accent)" stroke-width="1.5" opacity="0">${O([[.1+i*.18,0],[.13+i*.18,1],[.92,1],[.96,0]],D)}</rect>${i<3?`<path class="wire" d="M${x+44},130 H${x+52}"/>`:''}`});
+  s+=`${T(296,128,'new service','','end',9)}${T(296,140,'1–2 days','ta','end',10)}`;
+  return svg('0 0 300 146',s,'Product catalogues from several Tata brands flow into one catalogue service; a deployment pipeline runs build, test, deploy, live',5)},
+
+/* quality & operations: test suites and an on-call fix */
+qa(){const D=8;let s=`<rect class="box" x="6" y="8" width="142" height="112" rx="6"/>${T(77,22,'test suites','ts',null,10)}`;
+  ['unit','integration','regression','API / e2e'].forEach((n,i)=>{const y=38+i*20,a=.03+i*.08;
+    s+=`${T(14,y+4,n,'','start',9)}<rect class="f2" x="78" y="${y-4}" width="50" height="8" rx="4"/>
+    <rect class="fa" x="78" y="${y-4}" height="8" rx="4" width="0">${V('width',[[a,0],[a+.12,50],[.92,50],[.96,0]],D)}</rect>
+    <g opacity="0"><path d="M132,${y} l3,3 l6,-7" stroke="var(--ok)" stroke-width="2" fill="none"/>${O([[a+.12,0],[a+.14,1],[.92,1],[.96,0]],D)}</g>`});
+  s+=`<rect class="box" x="156" y="8" width="138" height="112" rx="6"/>${T(225,22,'on call','ts',null,10)}
+  <circle cx="168" cy="38" r="4" class="fb" opacity="0">${O([[.42,0],[.44,1],[.47,.2],[.5,1],[.53,.2],[.56,1],[.8,1],[.82,0]],D)}</circle>
+  <g opacity="0">${T(178,41,'alert','','start',9)}${O([[.42,0],[.44,1],[.8,1],[.82,0]],D)}</g>`;
+  [0,1,2,3].forEach(i=>{const y=54+i*12;s+=`<rect class="fd" x="166" y="${y}" width="${[96,80,104,70][i]}" height="3" rx="1.5" opacity="0">${O([[.5+i*.03,0],[.52+i*.03,.55],[.92,.55],[.96,0]],D)}</rect>`});
+  s+=`<rect x="162" y="73" width="116" height="11" rx="3" fill="none" stroke="var(--bad)" stroke-width="1.5" opacity="0">${O([[.64,0],[.66,1],[.76,1],[.78,0]],D)}</rect>
+  <g opacity="0">${T(166,82,'root cause','','start',9)}${O([[.66,0],[.67,1],[.76,1],[.77,0]],D)}</g>
+  <g opacity="0"><path d="M166,104 l3,3 l6,-7" stroke="var(--ok)" stroke-width="2" fill="none"/>${T(180,108,'fixed + test added','','start',9)}${O([[.78,0],[.8,1],[.92,1],[.96,0]],D)}</g>`;
+  return svg('0 0 300 128',s,'Test suites run green; an on-call alert is traced through the logs to a root cause, fixed, and covered by a new test',6.8)},
+
+/* reconciliation: identity mismatch fixed, weekly count falls */
+recon(){const D=8;let s=`${T(75,12,'Golden Record','ts',null,10)}${T(225,12,'brand database','ts',null,10)}
+  <rect class="box" x="8" y="18" width="134" height="74" rx="6"/><rect class="box" x="158" y="18" width="134" height="74" rx="6"/>`;
+  ['name','ID','phone','email'].forEach((f,i)=>{const y=34+i*15;s+=`${T(16,y+3,f,'','start',9)}<rect class="fd" x="56" y="${y-2}" width="${[60,44,52,70][i]}" height="4" rx="2"/>${T(166,y+3,f,'','start',9)}`;
+    if(i!==2)s+=`<rect class="fd" x="206" y="${y-2}" width="${[60,44,52,70][i]}" height="4" rx="2"/>`;});
+  s+=`<rect class="fb" x="206" y="62" height="4" rx="2" width="76">${V('width',[[0,76],[.4,76],[.5,52],[.92,52],[.96,76]],D)}</rect>
+  <rect class="fd" x="206" y="62" width="52" height="4" rx="2" opacity="0">${O([[.48,0],[.5,1],[.92,1],[.95,0]],D)}</rect>
+  <rect x="160" y="55" width="130" height="16" rx="3" fill="none" stroke="var(--bad)" stroke-width="1.5" opacity="0">${O([[.1,0],[.12,1],[.15,.3],[.18,1],[.21,.3],[.24,1],[.45,1],[.48,0]],D)}</rect>
+  <path d="M142,64 H158" stroke="var(--accent)" stroke-width="2" opacity="0" stroke-dasharray="3 2">${O([[.26,0],[.28,1],[.48,1],[.5,0]],D)}</path>
+  <g opacity="0"><path d="M268,60 l3,3 l6,-7" stroke="var(--ok)" stroke-width="2" fill="none"/>${O([[.5,0],[.52,1],[.92,1],[.95,0]],D)}</g>
+  ${T(8,112,'mismatches / week','','start',9)}
+  <rect class="f2" x="110" y="104" width="150" height="10" rx="5"/>
+  <rect class="fb" x="110" y="104" height="10" rx="5" width="150">${V('width',[[0,150],[.55,150],[.75,16],[.92,16],[.96,150]],D)}</rect>
+  <g>${T(266,113,'~15','ts','start',10)}${O([[0,1],[.6,1],[.62,0],[.94,0],[.96,1]],D)}</g>
+  <g opacity="0">${T(132,113,'1–2','ta','start',10)}${O([[.74,0],[.76,1],[.92,1],[.94,0]],D)}</g>`;
+  return svg('0 0 300 122',s,'A field that differs between the Golden Record and a brand database is detected and reconciled; weekly mismatches fall from about 15 to 1–2',6.5)},
+
+/* Quinbay: instant delivery first, multi-order consolidation */
+quinbay(){const D=8;let s=`${T(52,12,'orders','ts',null,10)}${T(165,12,'OMS / WMS','ts',null,10)}${T(253,12,'shipments','ts',null,10)}
+  <path class="wire" d="M8,58 H130"/><rect class="boxa" x="130" y="22" width="70" height="72" rx="6"/>${T(165,60,'service','ta',null,9.5)}
+  <rect class="box" x="214" y="22" width="80" height="72" rx="6"/>`;
+  const card=(lbl,cls)=>`<rect class="${cls}" x="-12" y="-9" width="24" height="18" rx="3"/>${T(0,3.5,lbl,cls=='boxa'?'ta':'ts',null,9)}`;
+  [['A',.04],['B',.12],['A',.20],['A',.28]].forEach(([l,a],i)=>{s+=`<g opacity="0">${card(l,'box')}${A([[a,20,58,0],[a+.02,20,58,1],[a+.2,142,58,1],[a+.22,142,58,0]],D)}</g>`});
+  s+=`<g opacity="0">${card('⚡','boxa')}${A([[.14,20,36,0],[.15,20,36,1],[.24,142,36,1],[.3,254,38,1],[.92,254,38,1],[.95,254,38,0]],D)}</g>
+  <g opacity="0">${T(254,56,'instant first','ta',null,8.5)}${O([[.3,0],[.32,1],[.92,1],[.95,0]],D)}</g>
+  <g opacity="0">${card('B','box')}${A([[.4,188,58,0],[.41,188,58,1],[.46,236,78,1],[.92,236,78,1],[.95,236,78,0]],D)}</g>
+  <g opacity="0"><rect class="boxa" x="-14" y="-9" width="28" height="18" rx="3"/>${T(0,3.5,'A×3','ta',null,9)}${A([[.52,188,58,0],[.53,188,58,1],[.6,272,78,1],[.92,272,78,1],[.95,272,78,0]],D)}</g>
+  <g opacity="0">${T(165,108,'merge A orders','ta',null,8.5)}${O([[.48,0],[.5,1],[.6,1],[.62,0]],D)}</g>
+  ${T(60,82,'queue','',null,9)}`;
+  return svg('0 0 300 114',s,'An instant-delivery order skips ahead of the queue, and three orders from the same customer are consolidated into one shipment',6.2)},
+
+/* HighRadius consultant: unstructured sources -> validated data -> cash application matching */
+hrfc(){const D=8;let s=`${T(30,10,'sources','ts',null,9.5)}
+  <rect class="box" x="10" y="16" width="40" height="28" rx="3"/><path d="M14,40 l9,-10 l7,7 l5,-5 l11,8z" class="fd"/><circle cx="40" cy="23" r="3" class="fd"/>
+  <rect class="box" x="10" y="52" width="40" height="28" rx="3"/><path d="M10,52 l20,15 l20,-15" stroke="var(--dg-stroke)" fill="none" stroke-width="1.2"/>
+  <rect class="box" x="10" y="88" width="40" height="28" rx="3"/><path d="M10,97 H50 M10,106 H50 M23,88 V116 M36,88 V116" stroke="var(--dg-stroke)" stroke-width="1"/>
+  <rect class="boxa" x="78" y="26" width="84" height="80" rx="6"/>${T(120,40,'validate','ta',null,9.5)}
+  ${T(240,10,'invoices','ts',null,9.5)}`;
+  [0,1,2].forEach(i=>{const y=28+i*28;s+=`<rect class="box" x="196" y="${y}" width="92" height="20" rx="4"/>${T(204,y+13.5,'INV-'+(101+i),'','start',9)}
+    <rect class="f2" x="252" y="${y+6}" width="28" height="8" rx="2"/>
+    <rect class="fo" x="252" y="${y+6}" width="28" height="8" rx="2" opacity="0">${O([[.58+i*.1,0],[.6+i*.1,1],[.92,1],[.95,0]],D)}</rect>`});
+  const srcY=[30,66,102];
+  for(let k=0;k<5;k++){const a=.04+k*.08,bad=k==2,y0=srcY[k%3],ry=50+(k%3)*14;
+    s+=`<g opacity="0"><circle r="3.2" class="${bad?'fb':'fd'}"/>${A([[a,52,y0,0],[a+.01,52,y0,1],[a+.08,96,ry,1],[a+.1,96,ry,bad?0:1],...(bad?[]:[[a+.12,96,ry,0]])],D)}</g>`;
+    if(!bad)s+=`<rect class="fa" x="104" y="${ry-2}" width="50" height="4" rx="2" opacity="0">${O([[a+.1,0],[a+.12,.8],[.92,.8],[.95,0]],D)}</rect>`;
+    else s+=`<g opacity="0">${T(120,92,'✕ malformed','',null,8.5)}${O([[a+.09,0],[a+.1,1],[a+.2,1],[a+.22,0]],D)}</g>`}
+  [0,1,2].forEach(i=>{const y=38+i*28;s+=`<path d="M162,${52+i*14} L196,${y}" stroke="var(--accent)" stroke-width="1.5" fill="none" stroke-dasharray="60" stroke-dashoffset="60">${V('stroke-dashoffset',[[.52+i*.1,60],[.6+i*.1,0],[.92,0],[.95,60]],D)}</path>`});
+  s+=`${T(240,124,'payments matched','',null,8.5)}`;
+  return svg('0 0 300 130',s,'Remittance data from images, emails and Excel is cleaned and validated, then payments are matched to invoices',7)},
+
+/* MedTourEasy: tweets -> cleaning -> regional trend chart */
+medtour(){const D=8;let s=`${T(44,10,'tweets (API)','ts',null,9.5)}${T(150,10,'cleaning','ts',null,9.5)}${T(250,10,'trends by region','ts',null,9.5)}
+  <rect class="boxa" x="118" y="30" width="64" height="62" rx="6"/>
+  <path d="M206,104 V24 M206,104 H294" stroke="var(--dg-stroke)" stroke-width="1.2" fill="none"/>`;
+  const hs=[58,34,46,22,14];
+  hs.forEach((h,i)=>{const x=214+i*16;s+=`<rect class="fa" x="${x}" width="11" y="104" height="0">${V('height',[[.2,0],[.75,h],[.92,h],[.96,0]],D)}${V('y',[[.2,104],[.75,104-h],[.92,104-h],[.96,104]],D)}</rect>`});
+  const tw=(cls,dash)=>`<rect x="-14" y="-7" width="28" height="14" rx="7" class="${cls}"${dash?' stroke-dasharray="3 2"':''}/><rect class="fd" x="-8" y="-1.5" width="16" height="3" rx="1.5"/>`;
+  for(let k=0;k<7;k++){const a=.03+k*.09,y=30+(k%4)*18,dup=k==3,bad=k==5;
+    s+=`<g opacity="0">${tw('box',bad)}${A([[a,20,y,0],[a+.01,20,y,1],[a+.1,150,61,1],[a+.12,150,61,0]],D)}</g>`;
+    if(dup||bad)s+=`<g opacity="0">${T(150,106,dup?'✕ duplicate':'✕ malformed','',null,8.5)}${O([[a+.1,0],[a+.11,1],[a+.18,1],[a+.2,0]],D)}</g>`;
+    else s+=`<g opacity="0"><circle r="3" class="fa"/>${A([[a+.11,182,61,0],[a+.12,182,61,1],[a+.17,214+(k%5)*16+5,100,1],[a+.18,214+(k%5)*16+5,100,0]],D)}</g>`}
+  s+=`${T(150,64,'Python','ta',null,9.5)}`;
+  return svg('0 0 300 118',s,'Tweets collected through the API are cleaned of duplicates and malformed records, then aggregated into regional trends',6.5)}
+});
+
 /* ============ DATA ============ */
 const EXP_FULL=[{
   id:"tata", role:"Software Development Engineer", org:"Tata Digital (Tata Neu)", place:"Bengaluru, India", when:"June 2022 – Sept 2025",
   sum:"Backend engineer in the travel (flights and hotels) team of the Tata Neu app, Kotlin (Ktor). For the final six months, a newly formed product catalogue team: Java (Spring Boot), plus the team's cloud infrastructure and CI/CD.",
   tabs:[
-   {t:"Travel backend · 2022–25", items:[
-    "Co-designed and built, in a team of two, the <b>Pax Service</b> in <b>Kotlin (Ktor)</b>: a privacy-focused access layer over customer master data (the Golden Record) for <b>140M+ members</b>, giving three travel systems scoped access to verified passenger data. It powered the whole flights and hotels category of the app. <a class=\"cs-link\" href=\"#projects\" data-cs=\"pax\">see case study</a>",
+   {t:"Travel backend · 2022–25", dg:["pax"], dcap:"The Golden Record stays isolated. Each travel system asks the Pax Service, which reads the full customer record and passes on only what the booking needs: name as on the ID, ID proof and contact details.", items:[
+    "Co-designed and built, in a team of two, the <b>Pax Service</b> in <b>Kotlin (Ktor)</b>: a privacy-focused access layer over customer master data (the Golden Record) for <b>140M+ members</b>, giving three travel systems scoped access to verified passenger data. It powered the whole flights and hotels category of the app.",
     "Designed with my teammate the <b>Booker–Pax data model</b>, so every traveller in a group booking earns their own loyalty rewards, not just the person who booked.",
     "Presented and defended the architecture decisions to technical managers and the team.",
     "Integrated real-time <b>loyalty tiers</b> and member benefits from all Tata airlines and IHCL hotel brands (Air India, AirAsia, Taj, Vivanta, Ginger).",
     "Added <b>AES-256 encryption</b> for customer mobile numbers and emails in the database."]},
-   {t:"Data & events", items:[
-    "Migrated event sync between the travel databases and the Golden Record from <b>Azure EventHub to Apache Kafka</b> with <b>zero downtime and no data loss</b> (tens of thousands of events a day): real-time sync at significantly lower cost. <a class=\"cs-link\" href=\"#projects\" data-cs=\"kafka\">see case study</a>",
+   {t:"Data & events", dg:["kafka","recon"], dcap:"Top: event sync moved from EventHub, where updates sometimes arrived late, to real-time sync in both directions through Kafka. Bottom: reconciliation finds a field that differs between the Golden Record and a brand database and fixes it; weekly mismatches fell from about 15 to 1–2.", items:[
+    "Migrated event sync between the travel databases and the Golden Record from <b>Azure EventHub to Apache Kafka</b> with <b>zero downtime and no data loss</b> (tens of thousands of events a day): real-time sync at significantly lower cost.",
     "Wrote reconciliation logic for PII \"identity drift\" between the Golden Record and brand databases, cutting mismatches from <b>~15 a week to 1–2</b>.",
     "Ran regular data sanity checks over millions of traveller records, and built occasional <b>Power BI</b> dashboards to track data quality.",
     "Checked data consistency during the migration with reconciliation runs between source and target."]},
-   {t:"APIs & notifications", items:[
+   {t:"APIs & notifications", dg:["tmpl"], dcap:"The notification platform only had fixed slots. The same single email now grows to fit any number of travellers and flight segments.", items:[
     "Designed, versioned and maintained the Pax Service <b>REST APIs</b>, keeping them backward compatible so other teams could migrate without disruption; documented them in Swagger and Confluence.",
-    "Extended the legacy notification platform to handle <b>variable content</b> (any number of travellers or flight segments in one message). It was adopted <b>organisation-wide</b>, and I guided <b>5–6 teams</b> through implementation. <a class=\"cs-link\" href=\"#projects\" data-cs=\"tmpl\">see case study</a>",
+    "Extended the legacy notification platform to handle <b>variable content</b> (any number of travellers or flight segments in one message). It was adopted <b>organisation-wide</b>, and I guided <b>5–6 teams</b> through implementation.",
     "Built and maintained <b>30+ templates</b> across email, SMS, WhatsApp and push, including SMS payloads that fit within character limits."]},
-   {t:"Product catalogue team · 2025", items:[
+   {t:"Product catalogue team · 2025", dg:["ucp"], dcap:"Product catalogues from Tata brands flow into one catalogue service. Below: owning the pipeline in the team cut the time to deploy a new service from 7–10 days to 1–2.", items:[
     "Joined a newly formed team from day one, reporting directly to the VP of Technology, building one product catalogue across Tata brands (BigBasket, Croma, Titan, Tanishq).",
     "Contributed to the catalogue services in <b>Java (Spring Boot)</b>.",
     "Also brought infrastructure provisioning and DevOps, previously two ticket-based central services, into the team, cutting the time to deploy a new service from <b>7–10 days to 1–2 days</b>.",
     "Provisioned managed Azure services (Container Apps, Function Apps, ACR, Cosmos DB, PostgreSQL) with <b>Terraform</b> for 6–7 services in 4 environments, and built <b>15+ CI/CD pipelines</b> in Azure DevOps and GitHub with automated test gates."]},
-   {t:"Quality & operations", items:[
+   {t:"Quality & operations", dg:["qa"], dcap:"Unit, integration, regression and API tests run before release; on call, an alert is traced through the logs to its root cause, fixed, and covered by a new test.", items:[
     "Wrote unit, integration and regression tests across the Pax Service, and supported UAT with product and QA teams.",
     "On call <b>every other week</b>; did root-cause analysis on production issues from logs and dashboards, including event-flow and partner integration failures.",
     "Wrote design docs, architecture diagrams, integration guides, runbooks and release notes.",
@@ -3021,7 +3123,7 @@ const EXP_FULL=[{
 const EXP_INTERN=[
  {id:"quinbay",role:"Software Engineer Intern",org:"Quinbay Technologies",place:"Bangalore, India",when:"Sept 2021 – May 2022",
   sum:"Backend microservices for warehouse and order management in a supply chain team.",
-  tabs:[{t:"Highlights",items:[
+  tabs:[{t:"Highlights",dg:["quinbay"],dcap:"An instant-delivery order moves ahead of the queue, and several orders from the same customer are consolidated into one shipment.",items:[
    "Owned backend microservices for the <b>Warehouse (WMS)</b> and <b>Order Management (OMS)</b> systems in <b>Java / Spring Boot</b>.",
    "Built features for <b>instant delivery prioritisation</b> and <b>multi-order consolidation</b> to improve logistics throughput.",
    "Wrote unit and integration tests, debugged issues across service boundaries, and kept API specifications up to date.",
@@ -3029,21 +3131,21 @@ const EXP_INTERN=[
   stack:["Java","Spring Boot","Microservices","REST APIs","JUnit"]},
  {id:"hr-fc",role:"Functional Consultant Intern",org:"HighRadius",place:"Hyderabad, India",when:"June 2021 – Aug 2021",
   sum:"Configured Cash Application automation from messy, unstructured financial data.",
-  tabs:[{t:"Highlights",items:[
+  tabs:[{t:"Highlights",dg:["hrfc"],dcap:"Remittance data arrives as images, emails and Excel files; it is cleaned and validated, malformed records are dropped, and payments are matched to invoices.",items:[
    "Analysed unstructured sources (images, Excel, emails) to configure <b>Cash Application Automation</b> systems.",
    "Cleaned, transformed and validated large datasets to keep model training data reliable.",
    "Tested configurations against sample remittance data and documented the data-mapping rules."]}],
   stack:["Data cleansing","Excel","SQL","Data validation"]},
  {id:"medtour",role:"Data Analyst Intern",org:"MedTourEasy",place:"New Delhi, India",when:"April 2021",
   sum:"Social media trend analysis with Python and the Twitter API.",
-  tabs:[{t:"Highlights",items:[
+  tabs:[{t:"Highlights",dg:["medtour"],dcap:"Tweets collected through the Twitter API are cleaned of duplicates and malformed records in Python, then counted by region.",items:[
    "Analysed social media data with <b>Python</b> and the <b>Twitter API</b> to find geographical trends.",
    "Cleaned missing, duplicate and malformed records, and made the collection scripts handle API errors.",
    "Presented the trends to the team with charts and a written report."]}],
   stack:["Python","Pandas","Twitter API","Data visualisation"]},
  {id:"hr-ml",role:"Machine Learning Intern",org:"HighRadius",place:"Bhubaneswar, India",when:"Jan 2021 – March 2021",
   sum:"Predicted invoice payment dates and served the model in a full-stack React app.",
-  tabs:[{t:"Highlights",items:[
+  tabs:[{t:"Highlights",dg:["payml"],dcap:"Historical invoices become training data; a regression model learns the payment pattern and predicts the date each open invoice will be paid.",items:[
    "Built an end-to-end <b>ML model that predicts invoice payment dates</b> from historical payment patterns.",
    "Did EDA and feature engineering, then compared several <b>regression models</b> on error metrics to choose the final one.",
    "Served predictions through versioned backend APIs into a <b>React</b> web app.",
@@ -3051,7 +3153,7 @@ const EXP_INTERN=[
   stack:["Python","Scikit-Learn","Regression","React","REST APIs"]},
  {id:"kyrion",role:"Technology Intern",org:"Kyrion Technologies",place:"New Delhi, India",when:"Jan 2021 – Feb 2021",
   sum:"Built a mobile-controlled IoT home automation prototype.",
-  tabs:[{t:"Highlights",items:[
+  tabs:[{t:"Highlights",dg:["iot"],dcap:"A tap on the phone goes through the cloud to the microcontroller, which switches a connected device (shown here as a light).",items:[
    "Designed a <b>mobile-controlled IoT home automation</b> system with C/C++, sensors, circuits and cloud connectivity.",
    "Tested and debugged the hardware-software integration, then demonstrated the working prototype."]}],
   stack:["C/C++","IoT","Sensors","Microcontrollers"]}
@@ -3073,54 +3175,26 @@ const PROJECTS=[
         "Fault tolerant: the consumer resumes from its last offset after a crash, with no data loss.",
         "Architecture decisions are documented (Kafka vs RabbitMQ or REST, Isolation Forest vs autoencoders, PostgreSQL vs a data lake). Runs with <b>Docker Compose</b>.",
         "Next steps: autoscaling on consumer lag, Airflow retraining on drift, an MLflow model registry."],
-  stack:["Python","Apache Kafka","Scikit-Learn","PostgreSQL","Docker"]},
- {id:"pax",kind:"Case study · Tata Digital",dcap:"The Golden Record stays isolated. Each travel system asks the Pax Service, which reads the full customer record and passes on only what the booking needs: name as on the ID, ID proof and contact details.",title:"Pax Service: privacy-focused access to customer master data",yr:"2022–25 · Tata Digital",cats:["Backend","Data Engineering"],
-  short:"The service between the customer master data for 140M+ members and the travel systems, sharing only what each booking needs.",
-  body:["Co-designed with one teammate, from architecture to implementation, in <b>Kotlin (Ktor)</b>; we presented and defended the design to technical managers.",
-        "Applies <b>data minimisation</b>: the Golden Record is never exposed directly; three travel systems get only names as on the government ID, valid ID proofs and contact details.",
-        "The <b>Booker–Pax model</b> lets every traveller in a group booking earn their own rewards.",
-        "AES-256 encryption for PII, versioned REST APIs, and Kafka-based sync with the Golden Record."],
-  stack:["Kotlin","Ktor","Apache Kafka","REST APIs","AES-256"]},
- {id:"kafka",kind:"Case study · Tata Digital",title:"Event sync: Azure EventHub to Apache Kafka",yr:"2022–25 · Tata Digital",cats:["Data Engineering","Backend"],
-  short:"Moved bidirectional sync between the travel databases and the Golden Record to Kafka, with zero downtime and no data loss.",
-  dcap:"Before: update events through EventHub sometimes arrived late. After: real-time sync in both directions through Kafka, with no downtime during the switch.",
-  body:["Moved the event architecture for <b>bidirectional sync</b> between the travel databases and the Golden Record from <b>Azure EventHub to Apache Kafka</b>.",
-        "<b>Zero downtime and no data loss</b> at tens of thousands of events a day; checked with source-to-target reconciliation runs.",
-        "Update events had previously arrived with occasional delays; sync became <b>real time</b>, and the team's running cost dropped significantly.",
-        "Kept versioned event schemas consistent across Kafka producers and consumers."],
-  stack:["Apache Kafka","Azure EventHub","Kotlin","Reconciliation"]},
- {id:"tmpl",kind:"Case study · Tata Digital",dcap:"The platform only had fixed slots. The same single email now grows to fit any number of travellers and flight segments.",title:"Variable-content notifications on a legacy platform",yr:"2022–25 · Tata Digital",cats:["Backend"],
-  short:"An approach for variable-length message content that was adopted across the organisation.",
-  body:["The central notification platform could only fill fixed placeholders. My approach handled any number of travellers and flight segments in one email, without rebuilding the platform.",
-        "The notification team then pointed every team with a variable-content case to it. For example, an account-deletion notice could list only the reasons that applied, out of about 20.",
-        "I personally guided 5–6 teams; others adopted it from the shared templates alone."],
-  stack:["HTML/CSS","Templating","API payload design"]},
- {id:"payml",kind:"Internship project",dcap:"Historical invoices become training data; a regression model learns the payment pattern and predicts the date each open invoice will be paid.",title:"Invoice payment-date prediction",yr:"2021 · HighRadius",cats:["Machine Learning","Python"],
-  short:"A regression model that predicts when invoices will be paid, served in a React dashboard.",
-  body:["EDA, feature engineering and comparison of several regression models on error metrics.",
-        "The model was served through versioned APIs into a full-stack React app for business users."],
-  stack:["Python","Scikit-Learn","React"]},
- {id:"iot",kind:"Internship project",dcap:"A tap on the phone goes through the cloud to the microcontroller, which switches a connected device (shown here as a light).",title:"Mobile-controlled home automation",yr:"2021 · Kyrion",cats:["IoT"],
-  short:"Sensors, circuits and C/C++ firmware, controlled from a phone through the cloud.",
-  body:["Designed the circuit, wrote the firmware, connected it to the cloud, and debugged the hardware-software integration end to end."],
-  stack:["C/C++","Sensors","Cloud"]}
+  stack:["Python","Apache Kafka","Scikit-Learn","PostgreSQL","Docker"]}
 ];
 /* skill -> [level 1-3, [ids]] */
 const SKILLS={
- "Languages":{"Kotlin":[1,["tata","pax"]],"Java":[1,["tata","quinbay"]],"Python":[2,["fraud","lens","medtour","hr-ml","payml"]],"SQL":[1,["tata","fraud","hr-fc"]],"C/C++":[3,["kyrion","iot"]],"HTML/CSS":[1,["tmpl","tata"]]},
- "Backend":{"Ktor":[1,["tata","pax"]],"Spring Boot":[1,["tata","quinbay"]],"REST API design & versioning":[1,["pax","tata","quinbay","hr-ml"]],"Microservices":[1,["tata","quinbay"]]},
- "Data engineering":{"Apache Kafka":[1,["kafka","tata","fraud"]],"Azure EventHub":[1,["kafka","tata"]],"Data reconciliation":[1,["tata","kafka"]],"Data quality & validation":[1,["tata","hr-fc","medtour"]],"PostgreSQL":[1,["tata","fraud"]]},
- "Data science & ML":{"Scikit-Learn":[2,["fraud","hr-ml","payml"]],"Pandas / NumPy":[2,["medtour","lens","fraud"]],"Simulation-based inference":[2,["lens"]],"Normalizing flows":[2,["lens"]],"Anomaly detection":[2,["fraud"]],"Regression models":[2,["hr-ml","payml"]],"Power BI":[3,["tata"]]},
- "Cloud & DevOps":{"Azure":[1,["tata"]],"Terraform":[1,["tata"]],"CI/CD pipelines":[1,["tata"]],"Docker":[2,["fraud","tata"]],"Git":[1,["tata"]]},
- "Testing & teamwork":{"Unit, integration & API tests":[1,["tata","quinbay"]],"Root-cause analysis":[1,["tata"]],"Technical writing":[1,["tata","lens"]],"Agile / Scrum":[1,["tata","quinbay"]]}
+ "Languages":{"Kotlin":[1,["tata"]],"Java":[1,["tata","quinbay"]],"Python":[2,["fraud","lens","medtour","hr-ml"]],"SQL":[1,["tata","fraud","hr-fc"]],"C/C++":[3,["kyrion"]],"HTML/CSS":[1,["tata#2"]]},
+ "Backend":{"Ktor":[1,["tata"]],"Spring Boot":[1,["tata","quinbay"]],"REST API design & versioning":[1,["tata#2","quinbay","hr-ml"]],"Microservices":[1,["tata","quinbay"]]},
+ "Data engineering":{"Apache Kafka":[1,["tata#1","fraud"]],"Azure EventHub":[1,["tata#1"]],"Data reconciliation":[1,["tata#1"]],"Data quality & validation":[1,["tata#1","hr-fc","medtour"]],"PostgreSQL":[1,["tata#3","fraud"]]},
+ "Data science & ML":{"Scikit-Learn":[2,["fraud","hr-ml"]],"Pandas / NumPy":[2,["medtour","lens","fraud"]],"Simulation-based inference":[2,["lens"]],"Normalizing flows":[2,["lens"]],"Anomaly detection":[2,["fraud"]],"Regression models":[2,["hr-ml"]],"Power BI":[3,["tata"]]},
+ "Cloud & DevOps":{"Azure":[1,["tata#3"]],"Terraform":[1,["tata#3"]],"CI/CD pipelines":[1,["tata#3"]],"Docker":[2,["fraud","tata#3"]],"Git":[1,["tata#3"]]},
+ "Testing & teamwork":{"Unit, integration & API tests":[1,["tata#4","quinbay"]],"Root-cause analysis":[1,["tata#4"]],"Technical writing":[1,["tata","lens"]],"Agile / Scrum":[1,["tata","quinbay"]]}
 };
 
 /* ============ RENDER ============ */
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 const lookup={};
-[...EXP_FULL,...EXP_INTERN].forEach(e=>lookup[e.id]={name:e.org,sub:e.role+" · "+e.when,go:"#tl-"+e.id});
+[...EXP_FULL,...EXP_INTERN].forEach(e=>{lookup[e.id]={name:e.org,sub:e.role+" · "+e.when,go:"#tl-"+e.id};
+  if(e.tabs.length>1)e.tabs.forEach((t,i)=>lookup[e.id+'#'+i]={name:e.org+' · '+t.t,sub:e.role,go:"#tl-"+e.id,tab:i})});
 PROJECTS.forEach(p=>lookup[p.id]={name:p.title,sub:p.yr,go:"#projects",p:p.id});
 
+function dgBlock(t){return t.dg?`<div class="mdg">${t.dg.map(k=>DIAG[k]()).join('<div class="dgsep"></div>')}</div><p class="dgcap">${t.dcap||''}</p>`:''}
 function tlHTML(e,open){
   return `<div class="tl-item${open?' open':''}" id="tl-${e.id}">
    <span class="tl-dot"></span>
@@ -3132,6 +3206,7 @@ function tlHTML(e,open){
     <p class="tl-sum">${e.sum}</p>
     <div class="tl-body"><div><div class="tl-inner">
       ${e.tabs.length>1?`<div class="tabs">${e.tabs.map((t,i)=>`<button class="tab${i?'':' on'}" data-i="${i}">${t.t}</button>`).join('')}</div>`:''}
+      <div class="tdg">${dgBlock(e.tabs[0])}</div>
       <ul class="bul">${e.tabs[0].items.map(x=>`<li>${x}</li>`).join('')}</ul>
       <div class="stack">${e.stack.map(s=>`<span class="tag">${s}</span>`).join('')}</div>
     </div></div></div>
@@ -3145,24 +3220,20 @@ $$('.tl-item').forEach(el=>{
   el.querySelectorAll('.tab').forEach(b=>b.onclick=()=>{
     el.querySelectorAll('.tab').forEach(x=>x.classList.remove('on'));b.classList.add('on');
     const ul=el.querySelector('.bul');ul.style.opacity=0;
-    setTimeout(()=>{ul.innerHTML=e.tabs[b.dataset.i].items.map(x=>`<li>${x}</li>`).join('');ul.style.opacity=1},150);
+    const tg=el.querySelector('.tdg');tg.style.opacity=0;
+    setTimeout(()=>{ul.innerHTML=e.tabs[b.dataset.i].items.map(x=>`<li>${x}</li>`).join('');tg.innerHTML=dgBlock(e.tabs[b.dataset.i]);watchDiagrams();ul.style.opacity=1;tg.style.opacity=1},150);
   });
-  el.querySelector('.bul').style.transition='opacity .15s';
+  el.querySelector('.bul').style.transition='opacity .15s';el.querySelector('.tdg').style.transition='opacity .15s';
 });
 
 /* projects */
-const cats=["All",...new Set(PROJECTS.flatMap(p=>p.cats))];
-$('#filters').innerHTML=cats.map((c,i)=>`<button class="chip${i?'':' on'}" data-c="${c}">${c}</button>`).join('');
+
 $('#pgrid').innerHTML=PROJECTS.map(p=>`<article class="pcard" data-id="${p.id}" data-cats="${p.cats.join('|')}" tabindex="0">
   <div class="dgwrap">${DIAG[p.id]?DIAG[p.id]():''}</div>
   <div class="meta-row"><span class="kind">${p.kind}</span><span class="yr">${p.yr}</span></div><h3>${p.title}</h3><p>${p.short}</p>
   <div class="stack" style="margin-top:0">${p.stack.slice(0,4).map(s=>`<span class="tag">${s}</span>`).join('')}</div>
   <span class="more">Read more →</span></article>`).join('');
-$$('.chip').forEach(b=>b.onclick=()=>{
-  $$('.chip').forEach(x=>x.classList.remove('on'));b.classList.add('on');
-  $$('.pcard').forEach(c=>{const show=b.dataset.c==="All"||c.dataset.cats.split('|').includes(b.dataset.c);
-    if(show){c.classList.remove('hide');c.style.opacity=0;c.style.transform='scale(.96)';requestAnimationFrame(()=>{c.style.opacity=1;c.style.transform=''})}else c.classList.add('hide')});
-});
+
 function openProject(id){
   const p=PROJECTS.find(x=>x.id===id);
   $('#pBody').innerHTML=`<span class="kind">${p.kind}</span> <span class="yr mono" style="color:var(--dim);font-size:13px;margin-left:6px">${p.yr}</span><h3>${p.title}</h3>
@@ -3179,8 +3250,6 @@ $$('.pcard').forEach(c=>{
   c.onmousemove=e=>{const r=c.getBoundingClientRect();c.style.setProperty('--mx',(e.clientX-r.left)+'px');c.style.setProperty('--my',(e.clientY-r.top)+'px')};
 });
 
-$$('.cs-link').forEach(l=>l.onclick=e=>{e.preventDefault();openProject(l.dataset.cs)});
-document.addEventListener('click',e=>{const l=e.target.closest&&e.target.closest('.cs-link');if(l){e.preventDefault();openProject(l.dataset.cs)}});
 /* diagrams: run only when visible; still frame for reduced motion */
 const RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
 const dio=new IntersectionObserver(es=>es.forEach(e=>{const s=e.target;if(RM)return;e.isIntersecting?s.unpauseAnimations():s.pauseAnimations()}),{threshold:.05});
@@ -3197,9 +3266,10 @@ $$('.schip').forEach(b=>b.onclick=()=>{
   const lv=["","Used at work","Used in projects or study","Basic"][lvl];
   const list=ids.map(i=>lookup[i]).filter(Boolean);
   $('#used').innerHTML=`<span class="eyebrow" style="margin-bottom:6px">${b.dataset.g}</span><h3>${b.dataset.s}</h3><p class="hint">${lv}</p>
-   ${list.length?`<ul>${list.map((x,k)=>`<li style="animation-delay:${k*60}ms"><a href="${x.go}" ${x.p?`data-p="${x.p}"`:''}><b>${x.name}</b><small>${x.sub}</small></a></li>`).join('')}</ul>`:'<p class="hint" style="margin-top:14px">See the CV for details.</p>'}`;
+   ${list.length?`<ul>${list.map((x,k)=>`<li style="animation-delay:${k*60}ms"><a href="${x.go}" ${x.p?`data-p="${x.p}"`:''} ${x.tab!=null?`data-tab="${x.tab}"`:''}><b>${x.name}</b><small>${x.sub}</small></a></li>`).join('')}</ul>`:'<p class="hint" style="margin-top:14px">See the CV for details.</p>'}`;
   $$('#used a[data-p]').forEach(a=>a.onclick=ev=>{ev.preventDefault();openProject(a.dataset.p)});
-  $$('#used a:not([data-p])').forEach(a=>a.onclick=()=>{const t=document.querySelector(a.getAttribute('href'));if(t&&!t.classList.contains('open'))t.classList.add('open')});
+  $$('#used a:not([data-p])').forEach(a=>a.onclick=()=>{const t=document.querySelector(a.getAttribute('href'));if(t&&!t.classList.contains('open'))t.classList.add('open');
+    if(a.dataset.tab){const tb=t.querySelectorAll('.tab')[+a.dataset.tab];if(tb&&!tb.classList.contains('on'))tb.click()}});
   const used=$('#used');
   if(innerWidth<860){b.closest('.sgroup').after(used);used.style.marginBottom='20px'}
   else if(used.parentNode!==$('.sx')){$('.sx').appendChild(used);used.style.marginBottom=''}
